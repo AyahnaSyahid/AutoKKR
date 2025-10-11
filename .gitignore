@@ -1,0 +1,9 @@
+3rd-party/lcms2/*
+3rd-party/opencv/*
+3rd-party/openssl-3.5.2/*
+resources/nc-pub.key
+resources/noerc-4096.key
+resources/noerc-4096-pub.key
+resources/Petit Cochon.ttf
+test_data/Format Kado.cdr
+build/
