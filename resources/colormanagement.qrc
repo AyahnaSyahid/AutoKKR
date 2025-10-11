@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="profiles">
+    <file alias="CMYK">JapanColor2001Coated.icc</file>
+    <file alias="SRGB">sRGB Color Space Profile.icm</file>
+  </qresource>
+  <qresource prefix="images">
+    <file alias="app-logo">app-logo.png</file>
+    <file alias="app-logo-hd">app-logo.svg</file>
+  </qresource>
+</RCC>

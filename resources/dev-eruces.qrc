@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="rsa">
+    <file alias="private">noerc-4096.key</file>
+    <file alias="public">nc-pub.key</file>
+  </qresource>
+</RCC>

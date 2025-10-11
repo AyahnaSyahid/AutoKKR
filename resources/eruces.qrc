@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="rsa">
+    <file alias="public">nc-pub.key</file>
+  </qresource>
+</RCC>
