@@ -6,6 +6,7 @@
 #include "runnablecoreltask.h"
 #include "cmykcolordialog.h"
 #include "aboutkkrdialog.h"
+#include "corelchooser.h"
 #include <QPixmapCache>
 #include <QStandardItem>
 #include <QColor>
@@ -16,6 +17,7 @@
 #include <QMouseEvent>
 #include <QItemSelectionModel>
 #include <QPalette>
+#include <QAction>
 #include <QMessageBox>
 #include <QThreadPool>
 #include <QLineEdit>
@@ -25,8 +27,8 @@
 #include <QValidator>
 #include <QResource>
 #include <QMimeData>
-// #include <QDragEnterEvent>
 
+// #include <QDragEnterEvent>
 namespace KKRMainWindowInternal {
   class Validator : public QValidator {
     public:
@@ -68,6 +70,12 @@ KKRMainWindow::KKRMainWindow(QWidget* parent)
   Q_INIT_RESOURCE(eruces); // Nama dasar file .qrc tanpa ekstensi
   setWindowIcon(QIcon(":/images/app-logo-hd"));
   ColorManagement::init();
+  
+  auto corelChooser = new CorelChooser(this);
+  auto act = new QAction("Corel", this);
+  connect(act, &QAction::triggered, corelChooser, &CorelChooser::openDialog);
+  auto mbar = menuBar();
+  mbar->addAction(act);
 }
 
 KKRMainWindow::~KKRMainWindow () {

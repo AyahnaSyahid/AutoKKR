@@ -111,6 +111,8 @@ set(KKR_CORE src/kkr/kkrmainwindow.h
              src/kkr_countergen/countergenerator.cpp
              resources/colormanagement.qrc
              resources/eruces.qrc
+             src/kkr/corelchooser.cpp
+             src/kkr/corelchooser.h
              )
 
 
@@ -128,7 +130,7 @@ add_executable(kkrwindow WIN32
                          # src/kkr-trial/main_kkr_trial.cpp
                          # src/kkr/winres.rc)
 
-# add_subdirectory(src/kkr_countergen)
+add_subdirectory(src/kkr_countergen)
 
 # target_link_libraries(kkr PRIVATE kkrcorelib)
 # target_link_libraries(fineTune PRIVATE kkrcorelib)

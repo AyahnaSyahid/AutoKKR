@@ -68,7 +68,7 @@ void RunnableCorelTask::run() {
     QString version = settings.value("CorelDRAW/LastUsedVersion").toString();
     ax.setControl(QString("CorelDRAW.Application.%1").arg(version));
   }
-  
+
   if(ax.isNull()) {
     QSettings cs("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\CorelDRAW.Application", QSettings::NativeFormat);
     if(!cs.contains("CLSID/.")) {

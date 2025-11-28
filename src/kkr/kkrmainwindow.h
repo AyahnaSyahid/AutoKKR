@@ -7,7 +7,7 @@
 #include <QStandardItem>
 #include <QItemSelection>
 #include <QPoint>
-#include "countermanager.h"
+// #include "countermanager.h"
 #include "polledsettings.h"
 
 namespace Ui {

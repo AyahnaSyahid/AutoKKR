@@ -5,8 +5,8 @@
 int main(int argc, char** args) {
   QApplication app(argc, args);
   qSetMessagePattern("%{file}(%{line}): %{message}");
-  app.setApplicationName("AutoKKR");
   app.setOrganizationName("BlackCircle");
+  app.setApplicationName("AutoKKR");
   app.setApplicationVersion("1.2.1");
   KKRMainWindow kkrm;
   kkrm.show();
