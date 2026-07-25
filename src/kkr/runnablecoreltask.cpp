@@ -256,6 +256,12 @@ void RunnableCorelTask::run() {
     
       auto frame = textShape->querySubObject("Text")->querySubObject("Story")->querySubObject("Frames(1)");
       frame->setProperty("VerticalAlignment", 1 /* CenterJustify */ );
+      auto story = textShape->querySubObject("Text")->querySubObject("Story");
+      // story->setProperty("LineSpacingType", 0);
+      // story->setProperty("LineSpacing", 100.0);
+      
+      story->dynamicCall("SetLineSpacing(int, qreal, int, int)", 0, 100.0, -1, -1);
+
       textShape->querySubObject("Text")->dynamicCall("FitTextToFrame()");
       auto shapeRange = ax.querySubObject("CreateShapeRange()");
       shapeRange->dynamicCall("Add(QAxObject)", picShape->asVariant());
