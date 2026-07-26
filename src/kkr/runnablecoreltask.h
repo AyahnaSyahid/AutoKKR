@@ -5,7 +5,9 @@
 #include <QRunnable>
 #include <QAbstractItemModel>
 
+class QAxObject;
 class RunnableCorelTask : public QRunnable {
+
   public:
     RunnableCorelTask(QAbstractItemModel *model);
     void run() override;
@@ -19,6 +21,8 @@ class RunnableCorelTask : public QRunnable {
     Notifier n;
     bool connected;
     QList<QSizeF> duplicateOffsets;
+    void addInfoText(QAxObject *layer, QAxObject *pageRect, const QString& ket);
+    void colorizePageRect(QAxObject *pageRect, const QColor& cl);
 };
 
 #endif // RUNNABLECORELTASK_H
