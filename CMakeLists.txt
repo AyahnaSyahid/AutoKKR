@@ -26,7 +26,6 @@ find_path(LCMS_INCLUDES
              REQUIRED )
 message(STATUS "${LCMS_INCLUDES}")
 
-
 set(OpenCV_ARCH x64)
 set(OpenCV_RUNTIME mingw)
 set(OpenCV_STATIC ON)
@@ -39,9 +38,41 @@ find_package(OpenCV
 set(OPENSSL_ROOT_DIR ${CMAKE_SOURCE_DIR}/3rd-party/openssl-3.5.2/lib/mingw/x64)
 set(OPENSSL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/3rd-party/openssl-3.5.2/include)
 set(OPENSSL_USE_STATIC_LIB ON)
+
 find_package(OpenSSL REQUIRED)
 
 set(OpenSSL_INCLUDES ${CMAKE_SOURCE_DIR}/3rd-party/openssl-3.5.2/include)
+
+
+# ---------------------------------------------------------------------------
+# Generator BuildInfo
+# ---------------------------------------------------------------------------
+
+option(UPDATE_BUILDINFO "Force update build info version.cpp file" OFF)
+
+if (UPDATE_BUILDINFO)
+    message(STATUS "Generating BuildInfo (about_build.cpp.in)")
+    string(TIMESTAMP BUILD_TIMESTAMP "%Y-%m-%d %H:%M:%S")
+    set(COMMIT_HASH "dynamic_hash_here") # Add your git logic if needed
+
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/about_build.cpp.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/about_build.cpp"
+    )
+    
+    # Optional: Reset the flag in the cache so it doesn't run on subsequent passive builds
+    set(UPDATE_BUILDINFO OFF CACHE BOOL "Force update the version.cpp file" FORCE)
+else()
+    message(STATUS "Skipped Generating BuildInfo (about_build.cpp.in)")
+    if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/about_build.cpp")
+        set(BUILD_TIMESTAMP "N/A")
+        set(COMMIT_HASH "N/A")
+        configure_file(
+            "${CMAKE_CURRENT_SOURCE_DIR}/about_build.cpp.in"
+            "${CMAKE_CURRENT_BINARY_DIR}/about_build.cpp"
+        )
+    endif()
+endif()
 
 find_package(Qt6 COMPONENTS Widgets Test Concurrent AxContainer REQUIRED )
 
@@ -106,8 +137,8 @@ set(KKR_CORE src/kkr/kkrmainwindow.h
              resources/eruces.qrc
              src/kkr/corelchooser.cpp
              src/kkr/corelchooser.h
+             "${CMAKE_CURRENT_BINARY_DIR}/about_build.cpp"
              )
-
 
 add_library(kkrcorelib STATIC ${KKR_CORE})
 
@@ -122,7 +153,7 @@ add_executable(kkrwindow WIN32
                src/kkr/main_kkr.cpp
                src/kkr/winres.rc)
 
-target_link_libraries(kkrwindow PRIVATE kkrcorelib)
+target_link_libraries(kkrwindow PUBLIC kkrcorelib)
 
 # ---------------------------------------------------------------------------
 # Optional targets, gated behind their CACHE options

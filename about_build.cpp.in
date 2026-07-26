@@ -1,0 +1,12 @@
+#include <string_view>
+
+namespace AboutBuild {
+    std::string_view getTimestamp() {
+        constexpr std::string_view ts = "@BUILD_TIMESTAMP@";
+        return ts;
+    }
+    std::string_view getGitHash() {
+        constexpr std::string_view hash = "@COMMIT_HASH@";
+        return hash;
+    }
+}
