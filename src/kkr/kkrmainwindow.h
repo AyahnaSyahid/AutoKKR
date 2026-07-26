@@ -20,13 +20,15 @@ class KKRMainWindow : public QMainWindow {
   public:
     KKRMainWindow(QWidget* parent = nullptr);
     ~KKRMainWindow();
+
     enum KKRDataRole {
       AbsoluteFilePathRole = Qt::UserRole + 1,
       FullPixmapRole,
       CustomerNameRole,
       DrawTextRole,
       InformationRole,
-      ColorDataRole
+      ColorDataRole,
+      FontNameRole
     };
   
   private:
@@ -47,6 +49,9 @@ class KKRMainWindow : public QMainWindow {
     void on_aboutQt_triggered();
     void on_aboutAutoKKR_triggered();
     void on_actionDialogWarna_triggered();
+    void onComboFontChanged(const QFont& fn);
+    void onComboFontContextMenuRequested(const QPoint& p);
+    void setDefaultFont(const QString& fontName);
 
   signals:
     void pixmapCreationFailed(const QString& name);
@@ -58,6 +63,7 @@ class KKRMainWindow : public QMainWindow {
     Ui::KKRMainWindow* ui;
     QStandardItemModel* smodel;
     PolledSettings ps;
+    QString fontName;
 };
 
 
