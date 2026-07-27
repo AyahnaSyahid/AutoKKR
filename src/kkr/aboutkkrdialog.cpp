@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QAction>
 #include <QFont>
+#include <QTextBrowser>
 
 namespace AboutBuild {
     std::string_view getTimestamp();
@@ -26,19 +27,20 @@ AboutKKRDialog::AboutKKRDialog(PolledSettings *ps, QWidget *parent) : m_ps(ps), 
     infoLabel->setFont(ifont);
     infoLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     setWindowTitle("Tentang Auto KK");
-    setFixedSize(600, 300); // Ukuran dialog, bisa disesuaikan
+    setFixedSize(720, 420); // Ukuran dialog, bisa disesuaikan
 
     QString indoText = R"(
 <h2>Tentang Auto KK</h2>
 <p>Auto KK adalah aplikasi untuk automatisasi pelayoutan desain kertas kado. Dirancang untuk memudahkan pengguna dalam mengatur layout desain secara otomatis, sehingga proses pembuatan kertas kado lebih efisien dan presisi.</p>
-<p>Dikembangkan menggunakan:</p>
+<p>Dikembangkan menggunakan:
 <ul>
     <li>Qt 6.8.3 : Framework UI cross-platform. Lisensi: GNU Lesser General Public License (LGPL) untuk edisi open-source. Lihat detail: <a href="https://www.qt.io/licensing/">https://www.qt.io/licensing/</a></li>
     <li>OpenCV 4.x: Library untuk pengolahan gambar dan visi komputer. Lisensi: Apache License 2.0. Lihat detail: <a href="https://opencv.org/license/">https://opencv.org/license/</a></li>
     <li>LittleCMS: Engine manajemen warna. Lisensi: MIT License. Lihat detail: <a href="https://littlecms.com/color-engine/">https://littlecms.com/color-engine/</a></li>
 </ul>
+</p>
 <p>
-  Versi: 1.2<br>Dibuat oleh: Noer Holis K<br>Hak Cipta © 2025 Noer C. Semua hak dilindungi.
+  Versi: 1.5<br>Dibuat oleh: Noer Holis K<br>Hak Cipta © 2025 Noer C. Semua hak dilindungi.
   <br> Build Time : %1 [%2] </br>
 </p>
 <p>Atas permitaan dari : Balad</p>
@@ -48,14 +50,15 @@ AboutKKRDialog::AboutKKRDialog(PolledSettings *ps, QWidget *parent) : m_ps(ps), 
     QString englishText = R"(
 <h2>About Auto KK</h2>
 <p>Auto KK is an application for automating the layout design of gift wrapping paper. Designed to make it easier for users to arrange design layouts automatically, making the gift wrapping creation process more efficient and precise.</p>
-<p>Developed using:</p>
+<p>Developed using:
 <ul>
     <li>Qt 6.8.3 : Cross-platform UI framework. License: GNU Lesser General Public License (LGPL) for open-source edition. See details: <a href="https://www.qt.io/licensing/">https://www.qt.io/licensing/</a></li>
     <li>OpenCV 4.x: Library for image processing and computer vision. License: Apache License 2.0. See details: <a href="https://opencv.org/license/">https://opencv.org/license/</a></li>
     <li>LittleCMS: Color management engine. License: MIT License. See details: <a href="https://littlecms.com/color-engine/">https://littlecms.com/color-engine/</a></li>
 </ul>
+</p>
 <p>
-  Version: 1.0<br>Created by: Noer Holis K<br>Copyright © 2025 Noer C. All rights reserved.
+  Version: 1.5 <br>Created by: Noer Holis K<br>Copyright © 2025 Noer C. All rights reserved.
   <br> Build Time : %1 [%2] </br>
 </p>
 <p>Thank you for using Auto KK! If you have suggestions or bugs, contact<br>Email: ayah.syahid@gmail.com</p>
@@ -66,10 +69,11 @@ AboutKKRDialog::AboutKKRDialog(PolledSettings *ps, QWidget *parent) : m_ps(ps), 
     QWidget *indonesianTab = new QWidget();
     QVBoxLayout *indonesianLayout = new QVBoxLayout(indonesianTab);
     QLabel *indonesianLabel = new QLabel(indoText.arg(AboutBuild::getTimestamp().data(), AboutBuild::getGitHash().data()));
-    
+    indonesianLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
     indonesianLabel->setWordWrap(true);
     indonesianLabel->setOpenExternalLinks(true); // Membuat link clickable
-    indonesianLayout->addWidget(indonesianLabel);
+    indonesianLayout->addWidget(indonesialLabel, 1);
+    
     auto *infoLayout = new QHBoxLayout();
     auto *btnLayout = new QVBoxLayout();
     QPushButton *reqToken = new QPushButton("Token Requests", this);
@@ -85,6 +89,7 @@ AboutKKRDialog::AboutKKRDialog(PolledSettings *ps, QWidget *parent) : m_ps(ps), 
     QWidget *englishTab = new QWidget();
     QVBoxLayout *englishLayout = new QVBoxLayout(englishTab);
     QLabel *englishLabel = new QLabel(englishText.arg(AboutBuild::getTimestamp().data(), AboutBuild::getGitHash().data()));
+    englishLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
     englishLabel->setWordWrap(true);
     englishLabel->setOpenExternalLinks(true); // Membuat link clickable
     englishLayout->addWidget(englishLabel);

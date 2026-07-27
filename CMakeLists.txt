@@ -18,6 +18,8 @@ find_library(LCMS_LIBS
              NAMES lcms
              HINTS "${LCMS_DIR}/lib"
              REQUIRED )
+
+message(STATUS "Current build type is: ${CMAKE_BUILD_TYPE}")
 message(STATUS "${LCMS_LIBS}")
 
 find_path(LCMS_INCLUDES
