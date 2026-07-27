@@ -365,10 +365,10 @@ void RunnableCorelTask::colorizePageRect(QAxObject* pageRect,
   auto uniColor = fill->querySubObject("UniformColor");
   if (cl.spec() == QColor::Spec::Cmyk) {
     uniColor->dynamicCall("CMYKAssign(int, int, int, int)", 
-        qRound(cl.cyan() / 255.0) * 100,
-        qRound(cl.magenta() / 255.0) * 100,
-        qRound(cl.yellow() / 255.0) * 100,
-        qRound(cl.black() / 255.0) * 100 );
+        cl.cyanF() * 100,
+        cl.magentaF() * 100,
+        cl.yellowF() * 100,
+        cl.blackF() * 100 );
   } else {
     uniColor->dynamicCall("RGBAssign(int, int, int)", 
         cl.red(), cl.green(), cl.blue() );
