@@ -365,6 +365,7 @@ void RunnableCorelTask::addInfoText(QAxObject* layer, QAxObject* pageRect,
 void RunnableCorelTask::colorizePageRect(QAxObject* pageRect,
                                          const QColor& cl)
 {
+  auto ax = pageRect->querySubObject("Application");
   bool fullTransparent = cl.alpha() == 0;
   bool fullOpaque = cl.alpha() == 255;
   auto fill = pageRect->querySubObject("Fill");
@@ -374,23 +375,27 @@ void RunnableCorelTask::colorizePageRect(QAxObject* pageRect,
   }
   auto uniColor = fill->querySubObject("UniformColor");
   if (cl.spec() == QColor::Spec::Cmyk) {
-    uniColor->dynamicCall("CMYKAssign(int, int, int, int)", 
-        qRound(cl.cyan() / 255.0) * 100,
-        qRound(cl.magenta() / 255.0) * 100,
-        qRound(cl.yellow() / 255.0) * 100,
-        qRound(cl.black() / 255.0) * 100 );
+    auto corelColor = ax->querySubObject("CreateCMYKColor(int, int, int, int)",
+                              cl.cyanF() * 100,
+                              cl.magentaF() * 100,
+                              cl.yellowF() * 100,
+                              cl.blackF() * 100);
+    pageRect->querySubObject("Fill")->
+      dynamicCall("ApplyUniformFill(QAxObject)", corelColor->asVariant());
+    corelColor->clear();
   } else {
-    uniColor->dynamicCall("RGBAssign(int, int, int)", 
-        cl.red(), cl.green(), cl.blue() );
+    // Force RGB
+    auto icc = cl;
+    icc = icc.toRgb();
+    auto corelColor = ax->querySubObject("CreateRGBColor(int, int, int)",
+      icc.red(), icc.green(), icc.blue());
+    pageRect->querySubObject("Fill")->dynamicCall("ApplyUniformFill(QAxObject)", corelColor->asVariant());
+    corelColor->clear();
   }
   auto transparency = pageRect->querySubObject("Transparency");
   if (!fullOpaque) {
     if (transparency) {
       transparency->dynamicCall("ApplyUniformTransparency(int)", qRound(cl.alphaF() * 100));
-    }
-  } else {
-    if (transparency) {
-      transparency->dynamicCall("ApplyNoTransparency()");
     }
   }
 }
