@@ -72,7 +72,7 @@ AboutKKRDialog::AboutKKRDialog(PolledSettings *ps, QWidget *parent) : m_ps(ps), 
     indonesianLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
     indonesianLabel->setWordWrap(true);
     indonesianLabel->setOpenExternalLinks(true); // Membuat link clickable
-    indonesianLayout->addWidget(indonesialLabel, 1);
+    indonesianLayout->addWidget(indonesianLabel, 1);
     
     auto *infoLayout = new QHBoxLayout();
     auto *btnLayout = new QVBoxLayout();
