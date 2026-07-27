@@ -270,6 +270,16 @@ void RunnableCorelTask::run() {
           "int, int, "
           "const QString& , int, int, int, int, int)",
           vmap);
+      
+      { // Fix Computer Rizal
+        qreal left = vmap[0].toDouble(), top = vmap[1].toDouble(), right = vmap[2].toDouble(), bottom = vmap[3].toDouble();
+        QRectF expected(left, top, right - left, bottom - top);
+        if (textShape->property("SizeHeight").toDouble() > expected.height() - 0.5) {
+          textShape->setProperty("SizeHeight", expected.height());
+          textShape->dynamicCall("SetPosition(qreal, qreal)", expected.center().x(), expected.center().y());
+        }
+      }
+      
       auto textFill = textShape->querySubObject("Fill")
                           ->querySubObject("UniformColor")
                           ->dynamicCall("CMYKAssign(0, 0, 0, 0)");
